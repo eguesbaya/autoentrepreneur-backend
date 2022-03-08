@@ -63,9 +63,15 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteClientById(@PathVariable Long id){
+    public ResponseEntity<String> deleteClientById(@PathVariable Long id) {
+        Client client = clientRepository.findById(id).get();
+        String message;
+        if (!client.getContacts().isEmpty()) {
+            message = client.getNomRaisonSociale() + " et tous les contacts associés ont été supprimés.";
+        } else {
+            message = client.getNomRaisonSociale() + " a été supprimé. Aucun contact n'a été affecté.";
+        }
         clientRepository.deleteById(id);
-        return ResponseEntity.ok("Client id#" + id + " has been deleted.");
+        return ResponseEntity.ok(message);
     }
-    
 }
