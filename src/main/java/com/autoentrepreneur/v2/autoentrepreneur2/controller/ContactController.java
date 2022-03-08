@@ -2,6 +2,7 @@ package com.autoentrepreneur.v2.autoentrepreneur2.controller;
 
 import java.util.List;
 
+import com.autoentrepreneur.v2.autoentrepreneur2.exception.ResourceNotFoundException;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Contact;
 import com.autoentrepreneur.v2.autoentrepreneur2.repository.ContactRepository;
 
@@ -28,7 +29,12 @@ public class ContactController {
     //get contact by ID
     @GetMapping("/{id}")
     public Contact getContact(@PathVariable Long id) {
-        return contactRepository.findById(id).get();
+        if (contactRepository.findById(id).isPresent()){
+            return contactRepository.findById(id).get();
+        }
+        else {
+            throw new ResourceNotFoundException("Contact id#" + id + " n'existe pas.");
+        }
     }
     
     // get contact by clientId
