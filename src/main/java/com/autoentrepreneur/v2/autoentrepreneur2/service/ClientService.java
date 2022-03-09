@@ -18,15 +18,25 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     public List<ClientDTO> getClients() {
-        return clientRepository.findAll().stream().map(Client::convertToDTO).collect(Collectors.toList());
+        return clientRepository.findAll()
+                .stream()
+                .map(Client::convertToDTO)
+            .collect(Collectors.toList());
     }
 
-    public ClientDTO getClientById(Long id) {
+    public ClientDTO getById(Long id) {
         if (clientRepository.findById(id).isPresent()) {
             return clientRepository.findById(id).get().convertToDTO();
         } else {
             throw new ResourceNotFoundException("Client id#" + id + " n'existe pas.");
         }
+    }
+
+    public List<ClientDTO> getBySiren(String siren) {
+        return clientRepository.findBySiren(siren)
+                .stream()
+                .map(Client::convertToDTO)
+            .collect(Collectors.toList());
     }
 
     // ClientDTO convertEntityToDTO(Client client);

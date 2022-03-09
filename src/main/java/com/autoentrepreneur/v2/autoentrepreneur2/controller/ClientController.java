@@ -35,13 +35,13 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ClientDTO getClient(@PathVariable Long id) {
-        return clientService.getClientById(id);
+        return clientService.getById(id);
     }
 
-    // @GetMapping("/siren/{siren}")
-    // public List<Client> getClientBySiren(@PathVariable String siren) {
-    //     return clientService.findBySiren(siren);
-    // }
+    @GetMapping("/siren/{siren}")
+    public List<ClientDTO> getClientBySiren(@PathVariable String siren) {
+        return clientService.getBySiren(siren);
+    }
 
     // @GetMapping("/nom/{nomRaisonSociale}")
     // public List<Client> getClientByRaisonSociale(@PathVariable String raisonSociale) {
