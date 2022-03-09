@@ -11,14 +11,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    
-    List<Client> findBySiret(String siret);
 
     List<Client> findByDateCreation(LocalDateTime dateCreation);
 
     List<Client> findByDateMAJ(LocalDateTime dateMAJ);
     
-    List<Client> findByNomRaisonSociale(String nomRaisonSociale);
+    List<Client> findByRaisonSociale(String raisonSociale);
 
     List<Client> findBySiren(String siren);
     
