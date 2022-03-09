@@ -33,14 +33,10 @@ public class ClientController {
         return clientService.getClients();
     }
 
-    // @GetMapping("/{id}")
-    // public Client getClient(@PathVariable Long id) {
-    //     if (clientService.findById(id).isPresent()) {
-    //         return clientService.findById(id).get();
-    //     } else {
-    //         throw new ResourceNotFoundException("Client id#" + id + " n'existe pas.");
-    //     }
-    // }
+    @GetMapping("/{id}")
+    public ClientDTO getClient(@PathVariable Long id) {
+        return clientService.getClientById(id);
+    }
 
     // @GetMapping("/siren/{siren}")
     // public List<Client> getClientBySiren(@PathVariable String siren) {
