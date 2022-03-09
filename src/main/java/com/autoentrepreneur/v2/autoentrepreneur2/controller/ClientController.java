@@ -43,10 +43,10 @@ public class ClientController {
         return clientService.getBySiren(siren);
     }
 
-    // @GetMapping("/nom/{nomRaisonSociale}")
-    // public List<Client> getClientByRaisonSociale(@PathVariable String raisonSociale) {
-    //     return clientService.findByRaisonSociale(raisonSociale);
-    // }
+    @GetMapping("/nom/{raisonSociale}")
+    public List<ClientDTO> getClientByRaisonSociale(@PathVariable String raisonSociale) {
+        return clientService.getByRaisonSociale(raisonSociale);
+    }
 
     // @GetMapping("/dateCreation/{dateCreation}")
     // public List<Client> getClientByDateCreation(@PathVariable LocalDateTime dateCreation) {

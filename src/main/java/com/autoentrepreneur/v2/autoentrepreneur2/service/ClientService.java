@@ -36,6 +36,13 @@ public class ClientService {
         return clientRepository.findBySiren(siren)
                 .stream()
                 .map(Client::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    
+    public List<ClientDTO> getByRaisonSociale(String raisonSociale) {
+        return clientRepository.findByRaisonSociale(raisonSociale)
+                .stream()
+                .map(Client::convertToDTO)
             .collect(Collectors.toList());
     }
 
