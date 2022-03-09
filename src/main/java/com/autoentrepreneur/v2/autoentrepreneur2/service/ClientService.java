@@ -1,9 +1,8 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.service;
 
-import java.sql.Timestamp;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;

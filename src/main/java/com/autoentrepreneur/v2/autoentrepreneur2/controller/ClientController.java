@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
-import com.autoentrepreneur.v2.autoentrepreneur2.exception.ResourceNotFoundException;
-import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
-import com.autoentrepreneur.v2.autoentrepreneur2.repository.ClientRepository;
 import com.autoentrepreneur.v2.autoentrepreneur2.service.ClientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<ClientDTO> getClients() {
         return clientService.getClients();
     }
