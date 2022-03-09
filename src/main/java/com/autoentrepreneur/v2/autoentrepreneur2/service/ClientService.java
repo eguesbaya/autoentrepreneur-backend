@@ -68,9 +68,18 @@ public class ClientService {
     public void deleteById(Long id) {
         clientRepository.deleteById(id);
     }
-    // ClientDTO convertEntityToDTO(Client client);
 
-    // ClientDTO createClient();
+    public ClientDTO create(ClientDTO inputClient) {
+        ClientDTO clientDTO = new ClientDTO();
+
+        clientDTO.setId(inputClient.getId());
+        clientDTO.setRaisonSociale(inputClient.getRaisonSociale());
+        clientDTO.setSiren(inputClient.getSiren());
+        //might need to convert contacts to objects
+        clientDTO.setContacts(inputClient.getContacts());
+        Client client = clientRepository.saveAndFlush(clientDTO.convertToEntity());
+        return client.convertToDTO();
+    }
 
     // ClientDTO updateClient();
 

@@ -71,9 +71,9 @@ public class ClientController {
         return ResponseEntity.ok(message);
     }
 
-    // @PostMapping("")
-    // public ResponseEntity<Client> createClient(@Validated @RequestBody Client inputClient) {
-    //     Client client = clientService.saveAndFlush(inputClient);
-    //     return new ResponseEntity<Client>(client, HttpStatus.CREATED);
-    // }
+    @PostMapping("")
+    public ResponseEntity<ClientDTO> createClient(@Validated @RequestBody ClientDTO inputClient) {
+        ClientDTO clientDTO = clientService.create(inputClient);
+        return new ResponseEntity<ClientDTO>(clientDTO, HttpStatus.CREATED);
+    }
 }
