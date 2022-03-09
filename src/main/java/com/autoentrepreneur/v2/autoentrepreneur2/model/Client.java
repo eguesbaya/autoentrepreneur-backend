@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -57,4 +58,13 @@ public class Client {
 
     @OneToMany(targetEntity = Contact.class, mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts;
+
+    public ClientDTO convertToDTO(){
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setId(this.id);
+        clientDTO.setRaisonSociale(this.raisonSociale);
+        clientDTO.setSiren(this.siren);
+        clientDTO.setContacts(this.contacts);
+        return clientDTO;
+    }
 }

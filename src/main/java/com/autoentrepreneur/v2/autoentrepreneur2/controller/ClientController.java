@@ -3,9 +3,11 @@ package com.autoentrepreneur.v2.autoentrepreneur2.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.exception.ResourceNotFoundException;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
 import com.autoentrepreneur.v2.autoentrepreneur2.repository.ClientRepository;
+import com.autoentrepreneur.v2.autoentrepreneur2.service.ClientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,58 +26,58 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @GetMapping("/")
-    public List<Client> getClients() {
-        return clientRepository.findAll();
+    public List<ClientDTO> getClients() {
+        return clientService.getClients();
     }
 
-    @GetMapping("/{id}")
-    public Client getClient(@PathVariable Long id) {
-        if (clientRepository.findById(id).isPresent()) {
-            return clientRepository.findById(id).get();
-        } else {
-            throw new ResourceNotFoundException("Client id#" + id + " n'existe pas.");
-        }
-    }
+    // @GetMapping("/{id}")
+    // public Client getClient(@PathVariable Long id) {
+    //     if (clientService.findById(id).isPresent()) {
+    //         return clientService.findById(id).get();
+    //     } else {
+    //         throw new ResourceNotFoundException("Client id#" + id + " n'existe pas.");
+    //     }
+    // }
 
-    @GetMapping("/siren/{siren}")
-    public List<Client> getClientBySiren(@PathVariable String siren) {
-        return clientRepository.findBySiren(siren);
-    }
+    // @GetMapping("/siren/{siren}")
+    // public List<Client> getClientBySiren(@PathVariable String siren) {
+    //     return clientService.findBySiren(siren);
+    // }
 
-    @GetMapping("/nom/{nomRaisonSociale}")
-    public List<Client> getClientByRaisonSociale(@PathVariable String raisonSociale) {
-        return clientRepository.findByRaisonSociale(raisonSociale);
-    }
+    // @GetMapping("/nom/{nomRaisonSociale}")
+    // public List<Client> getClientByRaisonSociale(@PathVariable String raisonSociale) {
+    //     return clientService.findByRaisonSociale(raisonSociale);
+    // }
 
-    @GetMapping("/dateCreation/{dateCreation}")
-    public List<Client> getClientByDateCreation(@PathVariable LocalDateTime dateCreation) {
-        return clientRepository.findByDateCreation(dateCreation);
-    }
+    // @GetMapping("/dateCreation/{dateCreation}")
+    // public List<Client> getClientByDateCreation(@PathVariable LocalDateTime dateCreation) {
+    //     return clientService.findByDateCreation(dateCreation);
+    // }
 
-    @GetMapping("/dateMAJ/{dateMAJ}")
-    public List<Client> getClientBydateMAJ(@PathVariable LocalDateTime dateMAJ) {
-        return clientRepository.findByDateMAJ(dateMAJ);
-    }
+    // @GetMapping("/dateMAJ/{dateMAJ}")
+    // public List<Client> getClientBydateMAJ(@PathVariable LocalDateTime dateMAJ) {
+    //     return clientService.findByDateMAJ(dateMAJ);
+    // }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteClientById(@PathVariable Long id) {
-        Client client = clientRepository.findById(id).get();
-        String message;
-        if (!client.getContacts().isEmpty()) {
-            message = client.getRaisonSociale() + " et tous les contacts associés ont été supprimés.";
-        } else {
-            message = client.getRaisonSociale() + " a été supprimé. Aucun contact n'a été affecté.";
-        }
-        clientRepository.deleteById(id);
-        return ResponseEntity.ok(message);
-    }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<String> deleteClientById(@PathVariable Long id) {
+    //     Client client = clientService.findById(id).get();
+    //     String message;
+    //     if (!client.getContacts().isEmpty()) {
+    //         message = client.getRaisonSociale() + " et tous les contacts associés ont été supprimés.";
+    //     } else {
+    //         message = client.getRaisonSociale() + " a été supprimé. Aucun contact n'a été affecté.";
+    //     }
+    //     clientService.deleteById(id);
+    //     return ResponseEntity.ok(message);
+    // }
 
-    @PostMapping("")
-    public ResponseEntity<Client> createClient(@Validated @RequestBody Client inputClient) {
-        Client client = clientRepository.saveAndFlush(inputClient);
-        return new ResponseEntity<Client>(client, HttpStatus.CREATED);
-    }
+    // @PostMapping("")
+    // public ResponseEntity<Client> createClient(@Validated @RequestBody Client inputClient) {
+    //     Client client = clientService.saveAndFlush(inputClient);
+    //     return new ResponseEntity<Client>(client, HttpStatus.CREATED);
+    // }
 }
