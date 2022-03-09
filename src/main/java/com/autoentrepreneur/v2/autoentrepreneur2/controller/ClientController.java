@@ -48,28 +48,28 @@ public class ClientController {
         return clientService.getByRaisonSociale(raisonSociale);
     }
 
-    // @GetMapping("/dateCreation/{dateCreation}")
-    // public List<Client> getClientByDateCreation(@PathVariable LocalDateTime dateCreation) {
-    //     return clientService.findByDateCreation(dateCreation);
-    // }
+    @GetMapping("/dateCreation/{dateCreation}")
+    public List<ClientDTO> getClientByDateCreation(@PathVariable LocalDateTime dateCreation) {
+        return clientService.getByDateCreation(dateCreation);
+    }
 
-    // @GetMapping("/dateMAJ/{dateMAJ}")
-    // public List<Client> getClientBydateMAJ(@PathVariable LocalDateTime dateMAJ) {
-    //     return clientService.findByDateMAJ(dateMAJ);
-    // }
+    @GetMapping("/dateMAJ/{dateMAJ}")
+    public List<ClientDTO> getClientBydateMAJ(@PathVariable LocalDateTime dateMAJ) {
+        return clientService.getByDateMAJ(dateMAJ);
+    }
 
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<String> deleteClientById(@PathVariable Long id) {
-    //     Client client = clientService.findById(id).get();
-    //     String message;
-    //     if (!client.getContacts().isEmpty()) {
-    //         message = client.getRaisonSociale() + " et tous les contacts associés ont été supprimés.";
-    //     } else {
-    //         message = client.getRaisonSociale() + " a été supprimé. Aucun contact n'a été affecté.";
-    //     }
-    //     clientService.deleteById(id);
-    //     return ResponseEntity.ok(message);
-    // }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteClientById(@PathVariable Long id) {
+        ClientDTO client = clientService.getById(id);
+        String message;
+        if (!client.getContacts().isEmpty()) {
+            message = client.getRaisonSociale() + " et tous les contacts associés ont été supprimés.";
+        } else {
+            message = client.getRaisonSociale() + " a été supprimé. Aucun contact n'a été affecté.";
+        }
+        clientService.deleteById(id);
+        return ResponseEntity.ok(message);
+    }
 
     // @PostMapping("")
     // public ResponseEntity<Client> createClient(@Validated @RequestBody Client inputClient) {

@@ -1,6 +1,9 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
@@ -43,9 +46,28 @@ public class ClientService {
         return clientRepository.findByRaisonSociale(raisonSociale)
                 .stream()
                 .map(Client::convertToDTO)
-            .collect(Collectors.toList());
+                .collect(Collectors.toList());
+    }
+    
+    //might need to change type of input to TimeStamp
+    public List<ClientDTO> getByDateCreation(LocalDateTime dateCreation) {
+        return clientRepository.findByDateCreation(dateCreation)
+                .stream()
+                .map(Client::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    
+    // might need to change type of input to TimeStamp
+    public List<ClientDTO> getByDateMAJ(LocalDateTime dateCreation) {
+        return clientRepository.findByDateMAJ(dateCreation)
+                .stream()
+                .map(Client::convertToDTO)
+                .collect(Collectors.toList());
     }
 
+    public void deleteById(Long id) {
+        clientRepository.deleteById(id);
+    }
     // ClientDTO convertEntityToDTO(Client client);
 
     // ClientDTO createClient();
@@ -54,5 +76,4 @@ public class ClientService {
 
     // void deleteClient();
 
-    // ClientDTO getClientById();
 }
