@@ -10,6 +10,7 @@ import com.autoentrepreneur.v2.autoentrepreneur2.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,7 +74,7 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Client> createClient(@RequestBody Client inputClient) {
+    public ResponseEntity<Client> createClient(@Validated @RequestBody Client inputClient) {
         Client client = clientRepository.saveAndFlush(inputClient);
         return new ResponseEntity<Client>(client, HttpStatus.CREATED);
     }
