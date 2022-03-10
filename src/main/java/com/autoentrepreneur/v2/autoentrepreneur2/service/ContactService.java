@@ -23,5 +23,11 @@ public class ContactService {
                 .map(Contact::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    public ContactDTO getById(Long id) {
+        return contactRepository.findById(id).get().convertToDTO();
+    }
+
+    
     
 }
