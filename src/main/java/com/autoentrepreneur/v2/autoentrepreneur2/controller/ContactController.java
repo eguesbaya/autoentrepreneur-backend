@@ -21,7 +21,7 @@ public class ContactController {
     private ContactRepository contactRepository;
 
     //get all contacts
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<Contact> getContacts() {
         return contactRepository.findAll();
     }

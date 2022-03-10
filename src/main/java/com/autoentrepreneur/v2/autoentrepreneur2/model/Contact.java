@@ -1,6 +1,6 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.model;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,13 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Transient;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,11 +59,11 @@ public class Contact {
     private Boolean isContactPrincipal;
 
     @Column(name= "date_creation")
-    @CreatedDate
-    private LocalDateTime dateCreation;
+    @CreationTimestamp
+    private Timestamp dateCreation;
 
     @Column(name ="date_mise_a_jour")
-    @LastModifiedDate
-    private LocalDateTime dateMAJ;
+    @UpdateTimestamp
+    private Timestamp dateMAJ;
 
 }
