@@ -81,6 +81,23 @@ public class ClientService {
     }
 
     // ClientDTO updateClient();
+    public ClientDTO update(Long id, ClientDTO inputClientDTO) {
+        Client client = clientRepository.findById(id).get();
+        if (inputClientDTO.getId() != null) {
+            client.setId(inputClientDTO.getId());
+        }
+        if (inputClientDTO.getRaisonSociale() != null){
+            client.setRaisonSociale(inputClientDTO.getRaisonSociale());
+        }
+        if (inputClientDTO.getSiren() != null) {
+            client.setSiren(inputClientDTO.getSiren());
+        }
+        // // will need to convert contacts into DTOs
+        // if (inputClientDTO.getContacts() != null) {
+        //     client.setContacts(inputClientDTO.getContacts());
+        // }
+        return clientRepository.saveAndFlush(client).convertToDTO();
+    }
 
     // void deleteClient();
 

@@ -3,13 +3,14 @@ package com.autoentrepreneur.v2.autoentrepreneur2.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.service.ClientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/clients")
@@ -69,8 +72,14 @@ public class ClientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ClientDTO> createClient(@Validated @RequestBody ClientDTO inputClient) {
-        ClientDTO clientDTO = clientService.create(inputClient);
+    public ResponseEntity<ClientDTO> createClient(@Valid @RequestBody ClientDTO inputClientDTO) {
+        ClientDTO clientDTO = clientService.create(inputClientDTO);
+        return new ResponseEntity<ClientDTO>(clientDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @Valid @RequestBody ClientDTO inputClientDTO) {
+        ClientDTO clientDTO = clientService.update(id, inputClientDTO);
         return new ResponseEntity<ClientDTO>(clientDTO, HttpStatus.CREATED);
     }
 }
