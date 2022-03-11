@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ContactDTO;
-
 import com.autoentrepreneur.v2.autoentrepreneur2.service.ContactService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -91,5 +92,12 @@ public class ContactController {
     public ResponseEntity<String> deleteContactById(@PathVariable Long id) {
         contactService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ContactDTO> putMethodName(@PathVariable Long id, @RequestBody ContactDTO inputContact) {
+        ContactDTO contactDTO = contactService.update(id, inputContact);
+
+        return new ResponseEntity<ContactDTO>(contactDTO, HttpStatus.CREATED);
     }
 }

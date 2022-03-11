@@ -1,13 +1,11 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.service;
 
-import com.autoentrepreneur.v2.autoentrepreneur2.repository.ClientRepository;
 import com.autoentrepreneur.v2.autoentrepreneur2.repository.ContactRepository;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ContactDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Contact;
@@ -102,30 +100,59 @@ public class ContactService {
                 .collect(Collectors.toList());
     }
 
-    public ContactDTO create(ContactDTO inputContact) {
-        ContactDTO contactDTO = new ContactDTO();
+    private void setAttributesExceptClient(Contact contact, ContactDTO inputContact) {
+        if (inputContact.getId() != null) {
+            contact.setId(inputContact.getId());
+        }
+        if (inputContact.getNom() != null) {
+            contact.setNom(inputContact.getNom());
+        }
+        if (inputContact.getPrenom() != null) {
+            contact.setPrenom(inputContact.getPrenom());
+        }
+        if (inputContact.getEmail() != null) {
+            contact.setEmail(inputContact.getEmail());
+        }
+        if (inputContact.getTelephone() != null) {
+            contact.setTelephone(inputContact.getTelephone());
+        }
+        if (inputContact.getMobile() != null) {
+            contact.setMobile(inputContact.getMobile());
+        }
+        if (inputContact.getIsContactPrincipal() != null) {
+            contact.setIsContactPrincipal(inputContact.getIsContactPrincipal());
+        }
 
-        contactDTO.setId(inputContact.getId());
-        contactDTO.setNom(inputContact.getNom());
-        contactDTO.setPrenom(inputContact.getPrenom());
-        contactDTO.setEmail(inputContact.getEmail());
-        contactDTO.setTelephone(inputContact.getTelephone());
-        contactDTO.setMobile(inputContact.getMobile());
-        contactDTO.setIsContactPrincipal(inputContact.getIsContactPrincipal());
-        // DTO becomes Entity
-        Contact contact = contactDTO.convertToEntity();
-
-        //ATTRIBUTING NEWLY CREATED CONTACT TO CLIENT
-        //1- Retrieving client
+    }
+    
+    private void setAttributeClient(Contact contact, ContactDTO inputContact) {
+        // 1- Retrieving client from input
         Long clientId = inputContact.getClient().getId();
         Client client = clientService.getById(clientId).convertToEntity();
-        //2- Adding newly created contact to this client's list of contacts
+        // 2- Adding contact to this client's list of contacts
         List<Contact> contactList = client.getContacts();
         contactList.add(contact);
         client.setContacts(contactList);
-
-        //ATTRIBUTING CLIENT TO NEWLY CREATED CONTACT
+        // 3- Adding client to this contact
         contact.setClient(client);
+    }
+
+    public ContactDTO create(ContactDTO inputContact) {
+        Contact contact = new Contact();
+        setAttributesExceptClient(contact, inputContact);
+
+        //ATTRIBUTING NEWLY CREATED CONTACT TO CLIENT
+        //1- Retrieving client
+        // Long clientId = inputContact.getClient().getId();
+        // Client client = clientService.getById(clientId).convertToEntity();
+        // //2- Adding newly created contact to this client's list of contacts
+        // List<Contact> contactList = client.getContacts();
+        // contactList.add(contact);
+        // client.setContacts(contactList);
+
+        // //ATTRIBUTING CLIENT TO NEWLY CREATED CONTACT
+        // contact.setClient(client);
+        setAttributeClient(contact, inputContact);
 
         //SAVING NEW CONTACT TO DB
         contact = contactRepository.saveAndFlush(contact);
@@ -136,6 +163,18 @@ public class ContactService {
 
     public void deleteById(Long id) {
         contactRepository.deleteById(id);
+    }
+
+    public ContactDTO update(Long id, ContactDTO inputContact) {
+        //FETCHING CONTACT TO UPDATE
+        Contact contact = contactRepository.findById(id).get();
+        //UPDATING CONTACT BASED ON INPUT
+        setAttributesExceptClient(contact, inputContact);
+        //UPDATING CLIENT
+        setAttributeClient(contact, inputContact);
+        //SAVING CONTACT TO DB
+        contact = contactRepository.saveAndFlush(contact);
+        return contact.convertToDTO();
     }
     
 }

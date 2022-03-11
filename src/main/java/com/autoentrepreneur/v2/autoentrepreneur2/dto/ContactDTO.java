@@ -2,8 +2,6 @@ package com.autoentrepreneur.v2.autoentrepreneur2.dto;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Contact;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
