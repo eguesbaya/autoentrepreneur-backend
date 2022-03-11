@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -57,6 +58,7 @@ public class Client {
     private Timestamp dateMAJ;
 
     @OneToMany(targetEntity = Contact.class, mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Contact> contacts;
 
     public ClientDTO convertToDTO(){

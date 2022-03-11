@@ -27,10 +27,6 @@ public class ClientDTO {
     @Size(min = 9, message = "Le numéro de SIREN doit faire exactement 9 chiffres.")
     private String siren;
 
-    // private Timestamp dateCreation;
-
-    // private Timestamp dateMAJ;
-
     private List<Contact> contacts;
 
     public Client convertToEntity() {
