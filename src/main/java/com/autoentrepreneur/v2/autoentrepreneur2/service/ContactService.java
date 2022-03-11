@@ -100,34 +100,34 @@ public class ContactService {
                 .collect(Collectors.toList());
     }
 
-    private void setAttributesExceptClient(Contact contact, ContactDTO inputContact) {
+    private void setAttributesExceptClient(ContactDTO contactDTO, ContactDTO inputContact) {
         if (inputContact.getId() != null) {
-            contact.setId(inputContact.getId());
+            contactDTO.setId(inputContact.getId());
         }
         if (inputContact.getNom() != null) {
-            contact.setNom(inputContact.getNom());
+            contactDTO.setNom(inputContact.getNom());
         }
         if (inputContact.getPrenom() != null) {
-            contact.setPrenom(inputContact.getPrenom());
+            contactDTO.setPrenom(inputContact.getPrenom());
         }
         if (inputContact.getEmail() != null) {
-            contact.setEmail(inputContact.getEmail());
+            contactDTO.setEmail(inputContact.getEmail());
         }
         if (inputContact.getTelephone() != null) {
-            contact.setTelephone(inputContact.getTelephone());
+            contactDTO.setTelephone(inputContact.getTelephone());
         }
         if (inputContact.getMobile() != null) {
-            contact.setMobile(inputContact.getMobile());
+            contactDTO.setMobile(inputContact.getMobile());
         }
         if (inputContact.getIsContactPrincipal() != null) {
-            contact.setIsContactPrincipal(inputContact.getIsContactPrincipal());
+            contactDTO.setIsContactPrincipal(inputContact.getIsContactPrincipal());
         }
 
     }
     
-    private void setAttributeClient(Contact contact, ContactDTO inputContact) {
+    private void setAttributeClient(Contact contact) {
         // 1- Retrieving client from input
-        Long clientId = inputContact.getClient().getId();
+        Long clientId = contact.getClient().getId();
         Client client = clientService.getById(clientId).convertToEntity();
         // 2- Adding contact to this client's list of contacts
         List<Contact> contactList = client.getContacts();
@@ -138,25 +138,13 @@ public class ContactService {
     }
 
     public ContactDTO create(ContactDTO inputContact) {
-        Contact contact = new Contact();
-        setAttributesExceptClient(contact, inputContact);
 
-        //ATTRIBUTING NEWLY CREATED CONTACT TO CLIENT
-        //1- Retrieving client
-        // Long clientId = inputContact.getClient().getId();
-        // Client client = clientService.getById(clientId).convertToEntity();
-        // //2- Adding newly created contact to this client's list of contacts
-        // List<Contact> contactList = client.getContacts();
-        // contactList.add(contact);
-        // client.setContacts(contactList);
-
-        // //ATTRIBUTING CLIENT TO NEWLY CREATED CONTACT
-        // contact.setClient(client);
-        setAttributeClient(contact, inputContact);
-
+        //TRANSFORMING DTO INTO ENTITY
+        Contact contact = inputContact.convertToEntity();
+        //SETTING CLIENT
+        setAttributeClient(contact);
         //SAVING NEW CONTACT TO DB
         contact = contactRepository.saveAndFlush(contact);
-
         //CONVERTING CONTACT BACK TO DTO
         return contact.convertToDTO();
     }
@@ -166,10 +154,11 @@ public class ContactService {
     }
 
     public ContactDTO update(Long id, ContactDTO inputContact) {
-        //FETCHING CONTACT TO UPDATE
-        Contact contact = contactRepository.findById(id).get();
-        //UPDATING CONTACT BASED ON INPUT
-        setAttributesExceptClient(contact, inputContact);
+        //FETCHING CONTACT TO UPDATE AND CONVERTING IT TO DTO
+        ContactDTO contactDTO = contactRepository.findById(id).get().convertToDTO();
+        //UPDATING CONTACT BASED ON INPUT, AND CONVERTING IT BACK TO ENTITY
+        setAttributesExceptClient(contactDTO, inputContact);
+        Contact contact = contactDTO.convertToEntity();
         //UPDATING CLIENT
         setAttributeClient(contact, inputContact);
         //SAVING CONTACT TO DB
