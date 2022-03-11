@@ -95,5 +95,24 @@ public class ContactService {
                 .map(Contact::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    public ContactDTO create(ContactDTO inputContact) {
+        ContactDTO contactDTO = new ContactDTO();
+
+        contactDTO.setId(inputContact.getId());
+        contactDTO.setNom(inputContact.getNom());
+        contactDTO.setPrenom(inputContact.getPrenom());
+        contactDTO.setEmail(inputContact.getEmail());
+        contactDTO.setTelephone(inputContact.getTelephone());
+        contactDTO.setMobile(inputContact.getMobile());
+        contactDTO.setClient(inputContact.getClient());
+        contactDTO.setIsContactPrincipal(inputContact.getIsContactPrincipal());
+        Contact contact = contactRepository.saveAndFlush(contactDTO.convertToEntity());
+        return contact.convertToDTO();
+    }
+
+    public void deleteById(Long id) {
+        contactRepository.deleteById(id);
+    }
     
 }
