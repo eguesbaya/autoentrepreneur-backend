@@ -1,12 +1,15 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.service;
 
+import com.autoentrepreneur.v2.autoentrepreneur2.repository.ClientRepository;
 import com.autoentrepreneur.v2.autoentrepreneur2.repository.ContactRepository;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ContactDTO;
+import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Contact;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class ContactService {
 
     @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    private ClientService clientService;
 
     public List<ContactDTO> getContacts() {
         return contactRepository.findAll()
@@ -105,9 +111,26 @@ public class ContactService {
         contactDTO.setEmail(inputContact.getEmail());
         contactDTO.setTelephone(inputContact.getTelephone());
         contactDTO.setMobile(inputContact.getMobile());
-        contactDTO.setClient(inputContact.getClient());
         contactDTO.setIsContactPrincipal(inputContact.getIsContactPrincipal());
-        Contact contact = contactRepository.saveAndFlush(contactDTO.convertToEntity());
+        // DTO becomes Entity
+        Contact contact = contactDTO.convertToEntity();
+
+        //ATTRIBUTING NEWLY CREATED CONTACT TO CLIENT
+        //1- Retrieving client
+        Long clientId = inputContact.getClient().getId();
+        Client client = clientService.getById(clientId).convertToEntity();
+        //2- Adding newly created contact to this client's list of contacts
+        List<Contact> contactList = client.getContacts();
+        contactList.add(contact);
+        client.setContacts(contactList);
+
+        //ATTRIBUTING CLIENT TO NEWLY CREATED CONTACT
+        contact.setClient(client);
+
+        //SAVING NEW CONTACT TO DB
+        contact = contactRepository.saveAndFlush(contact);
+
+        //CONVERTING CONTACT BACK TO DTO
         return contact.convertToDTO();
     }
 

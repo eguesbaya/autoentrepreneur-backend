@@ -8,10 +8,13 @@ import com.autoentrepreneur.v2.autoentrepreneur2.dto.ContactDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.service.ContactService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,11 +81,11 @@ public class ContactController {
         return contactService.getByDateMAJ(dateMAJ);
     }
 
-    // @PostMapping("")
-    // public ResponseEntity<ContactDTO> createContact(@RequestBody ContactDTO inputContact){
-    //     ContactDTO contactDTO = contactService.create(inputContact);
-    //     return new ResponseEntity<ContactDTO>(contactDTO, HttpStatus.CREATED);
-    // }
+    @PostMapping("")
+    public ResponseEntity<ContactDTO> createContact(@RequestBody ContactDTO inputContact){
+        ContactDTO contactDTO = contactService.create(inputContact);
+        return new ResponseEntity<ContactDTO>(contactDTO, HttpStatus.CREATED);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteContactById(@PathVariable Long id) {
