@@ -160,7 +160,7 @@ public class ContactService {
         setAttributesExceptClient(contactDTO, inputContact);
         Contact contact = contactDTO.convertToEntity();
         //UPDATING CLIENT
-        setAttributeClient(contact, inputContact);
+        setAttributeClient(contact);
         //SAVING CONTACT TO DB
         contact = contactRepository.saveAndFlush(contact);
         return contact.convertToDTO();
