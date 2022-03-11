@@ -3,6 +3,8 @@ package com.autoentrepreneur.v2.autoentrepreneur2.controller;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ContactDTO;
 import com.autoentrepreneur.v2.autoentrepreneur2.service.ContactService;
 
@@ -83,7 +85,7 @@ public class ContactController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ContactDTO> createContact(@RequestBody ContactDTO inputContact){
+    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO inputContact){
         ContactDTO contactDTO = contactService.create(inputContact);
         return new ResponseEntity<ContactDTO>(contactDTO, HttpStatus.CREATED);
     }
@@ -95,7 +97,7 @@ public class ContactController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContactDTO> putMethodName(@PathVariable Long id, @RequestBody ContactDTO inputContact) {
+    public ResponseEntity<ContactDTO> putMethodName(@PathVariable Long id, @Valid @RequestBody ContactDTO inputContact) {
         ContactDTO contactDTO = contactService.update(id, inputContact);
 
         return new ResponseEntity<ContactDTO>(contactDTO, HttpStatus.CREATED);

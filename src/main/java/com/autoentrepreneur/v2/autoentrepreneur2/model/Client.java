@@ -57,7 +57,7 @@ public class Client {
     @UpdateTimestamp
     private Timestamp dateMAJ;
 
-    @OneToMany(targetEntity = Contact.class, mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = Contact.class, mappedBy = "client", cascade = CascadeType.MERGE, orphanRemoval = true)
     @JsonManagedReference
     private List<Contact> contacts;
 
