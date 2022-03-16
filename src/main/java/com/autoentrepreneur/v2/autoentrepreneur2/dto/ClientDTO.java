@@ -1,5 +1,6 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.dto;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -25,6 +26,10 @@ public class ClientDTO {
     @Size(min = 9, message = "Le numéro de SIREN doit faire exactement 9 chiffres.")
     private String siren;
 
+    private Timestamp dateCreation;
+
+    private Timestamp dateMAJ;
+
     private List<Contact> contacts;
 
     public Client convertToEntity() {
@@ -33,6 +38,8 @@ public class ClientDTO {
         client.setRaisonSociale(this.raisonSociale);
         client.setSiren(this.siren);
         client.setContacts(this.contacts);
+        client.setDateCreation(this.dateCreation);
+        client.setDateMAJ(this.dateMAJ);
         return client;
     }
     

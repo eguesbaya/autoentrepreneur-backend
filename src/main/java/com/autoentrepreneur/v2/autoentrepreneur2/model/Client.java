@@ -67,6 +67,8 @@ public class Client {
         clientDTO.setRaisonSociale(this.raisonSociale);
         clientDTO.setSiren(this.siren);
         clientDTO.setContacts(this.contacts);
+        clientDTO.setDateCreation(this.dateCreation);
+        clientDTO.setDateMAJ(this.dateMAJ);
         return clientDTO;
     }
 }
