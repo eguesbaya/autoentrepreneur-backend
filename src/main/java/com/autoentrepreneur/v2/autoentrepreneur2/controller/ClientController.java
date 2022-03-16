@@ -30,7 +30,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public List<ClientDTO> getClients() {
         return clientService.getClients();
     }
@@ -73,7 +73,7 @@ public class ClientController {
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<ClientDTO> createClient(@Valid @RequestBody ClientDTO inputClientDTO) {
         ClientDTO clientDTO = clientService.create(inputClientDTO);
         return new ResponseEntity<ClientDTO>(clientDTO, HttpStatus.CREATED);
