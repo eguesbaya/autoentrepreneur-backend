@@ -71,8 +71,14 @@ public class Contact {
     private Timestamp dateMAJ;
 
     public ContactDTO convertToDTO() {
-        ModelMapper modelMapper = new ModelMapper();
-        ContactDTO contactDTO = modelMapper.map(this, ContactDTO.class);
+        ContactDTO contactDTO = new ContactDTO();
+        contactDTO.setId(this.id);
+        contactDTO.setEmail(this.email);
+        contactDTO.setTelephone(this.telephone);
+        contactDTO.setMobile(this.mobile);
+        contactDTO.setClient(this.client);
+        contactDTO.setDateCreation(this.dateCreation);
+        contactDTO.setDateMAJ(this.dateMAJ);
         return contactDTO;
     }
 

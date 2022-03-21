@@ -11,6 +11,7 @@ import com.autoentrepreneur.v2.autoentrepreneur2.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +25,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/contacts")
+@CrossOrigin
 public class ContactController {
 
     @Autowired
     private ContactService contactService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public List<ContactDTO> getContacts() {
         return contactService.getContacts();
     }

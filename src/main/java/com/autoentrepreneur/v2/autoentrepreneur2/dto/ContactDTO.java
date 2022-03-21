@@ -1,5 +1,7 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.dto;
 
+import java.sql.Timestamp;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -35,6 +37,10 @@ public class ContactDTO {
 
     private Boolean isContactPrincipal;
 
+    private Timestamp dateCreation;
+
+    private Timestamp dateMAJ;
+
     public Contact convertToEntity() {
         Contact contact = new Contact();
         contact.setId(this.id);
@@ -45,6 +51,8 @@ public class ContactDTO {
         contact.setMobile(this.mobile);
         contact.setClient(this.client);
         contact.setIsContactPrincipal(this.isContactPrincipal);
+        contact.setDateCreation(this.dateCreation);
+        contact.setDateMAJ(this.dateMAJ);
         return contact;
     }
     
