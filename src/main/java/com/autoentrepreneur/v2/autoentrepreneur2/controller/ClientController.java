@@ -62,15 +62,8 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteClientById(@PathVariable Long id) {
-        ClientDTO client = clientService.getById(id);
-        String message;
-        if (!client.getContacts().isEmpty()) {
-            message = client.getRaisonSociale() + " et tous les contacts associés ont été supprimés.";
-        } else {
-            message = client.getRaisonSociale() + " a été supprimé. Aucun contact n'a été affecté.";
-        }
         clientService.deleteById(id);
-        return ResponseEntity.ok(message);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/")
