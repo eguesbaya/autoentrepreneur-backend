@@ -1,8 +1,10 @@
 package com.autoentrepreneur.v2.autoentrepreneur2.service;
 
+
 import com.autoentrepreneur.v2.autoentrepreneur2.repository.ContactRepository;
 
 import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,14 +22,27 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
+
     @Autowired
     private ClientService clientService;
 
     public List<ContactDTO> getContacts() {
-        return contactRepository.findAll()
+         List<ContactDTO> contacts = contactRepository.findAll()
                 .stream()
                 .map(Contact::convertToDTO)
-                .collect(Collectors.toList());
+                 .collect(Collectors.toList());
+        // List<Client> clients = clientRepository.findAll();
+        // for (Client client : clients) {
+        //     //Récupère les contacts
+        //     contacts.addAll(client.getContacts().stream().map(Contact::convertToDTO).collect(Collectors.toList()));
+        //     ;
+        // }
+         return contacts;
+        
+        // return contactRepository.findAll()
+        //         .stream()
+        //         .map(Contact::convertToDTO)
+        //         .collect(Collectors.toList());
     }
 
     public ContactDTO getById(Long id) {

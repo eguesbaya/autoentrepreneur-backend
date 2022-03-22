@@ -2,13 +2,13 @@ package com.autoentrepreneur.v2.autoentrepreneur2.dto;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
-import com.autoentrepreneur.v2.autoentrepreneur2.model.Contact;
 
 import lombok.Data;
 
@@ -30,17 +30,16 @@ public class ClientDTO {
 
     private Timestamp dateMAJ;
 
-    private List<Contact> contacts;
+    private List<ContactDTO> contacts;
 
     public Client convertToEntity() {
         Client client = new Client();
         client.setId(this.id);
         client.setRaisonSociale(this.raisonSociale);
         client.setSiren(this.siren);
-        client.setContacts(this.contacts);
         client.setDateCreation(this.dateCreation);
         client.setDateMAJ(this.dateMAJ);
         return client;
     }
-    
+
 }

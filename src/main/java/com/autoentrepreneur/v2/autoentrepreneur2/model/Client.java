@@ -2,10 +2,12 @@ package com.autoentrepreneur.v2.autoentrepreneur2.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +16,6 @@ import javax.persistence.Table;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ClientDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,13 +40,17 @@ public class Client {
     @Column(name = "raison_sociale", nullable = false)
     private String raisonSociale;
 
-    // Le numéro SIRET (ou système d'identification du répertoire des établissements) identifie chaque établissement de l'entreprise.
-    // Il se compose de 14 chiffres : les neuf chiffres du numéro SIREN + les cinq chiffres correspondant à un numéro NIC.
+    // Le numéro SIRET (ou système d'identification du répertoire des
+    // établissements) identifie chaque établissement de l'entreprise.
+    // Il se compose de 14 chiffres : les neuf chiffres du numéro SIREN + les cinq
+    // chiffres correspondant à un numéro NIC.
     // @Column(name = "siret")
     // private String siret;
 
-    // Le numéro SIREN (ou système d'identification du répertoire des entreprises) sert à identifier l'entreprise en tant qu'entité.
-    // Il s'agit d'un code unique et invariable tout au long de la vie de l'entreprise. Il se compose de neuf chiffres.
+    // Le numéro SIREN (ou système d'identification du répertoire des entreprises)
+    // sert à identifier l'entreprise en tant qu'entité.
+    // Il s'agit d'un code unique et invariable tout au long de la vie de
+    // l'entreprise. Il se compose de neuf chiffres.
     @Column(name = "siren", length = 9)
     private String siren;
 
@@ -57,16 +62,14 @@ public class Client {
     @UpdateTimestamp
     private Timestamp dateMAJ;
 
-    @OneToMany(targetEntity = Contact.class, mappedBy = "client", cascade = CascadeType.MERGE, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(targetEntity = Contact.class, mappedBy = "client", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Contact> contacts;
 
-    public ClientDTO convertToDTO(){
+    public ClientDTO convertToDTO() {
         ClientDTO clientDTO = new ClientDTO();
         clientDTO.setId(this.id);
         clientDTO.setRaisonSociale(this.raisonSociale);
         clientDTO.setSiren(this.siren);
-        clientDTO.setContacts(this.contacts);
         clientDTO.setDateCreation(this.dateCreation);
         clientDTO.setDateMAJ(this.dateMAJ);
         return clientDTO;

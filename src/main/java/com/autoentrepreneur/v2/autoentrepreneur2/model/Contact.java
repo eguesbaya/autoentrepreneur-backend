@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.autoentrepreneur.v2.autoentrepreneur2.dto.ContactDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -53,9 +53,8 @@ public class Contact {
     @Column(name = "mobile")
     private String mobile;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonBackReference
     private Client client;
 
     @Column(name="is_contact_principal")
@@ -77,7 +76,7 @@ public class Contact {
         contactDTO.setEmail(this.email);
         contactDTO.setTelephone(this.telephone);
         contactDTO.setMobile(this.mobile);
-        contactDTO.setClient(this.client);
+        contactDTO.setClient(this.client.convertToDTO());
         contactDTO.setDateCreation(this.dateCreation);
         contactDTO.setDateMAJ(this.dateMAJ);
         return contactDTO;

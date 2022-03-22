@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.autoentrepreneur.v2.autoentrepreneur2.model.Client;
 import com.autoentrepreneur.v2.autoentrepreneur2.model.Contact;
 
 import lombok.Data;
@@ -17,10 +16,10 @@ public class ContactDTO {
 
     private Long id;
 
-    @Size(min= 2, max= 255)
+    @Size(min = 2, max = 255)
     private String nom;
 
-    @Size(min= 2, max= 255)
+    @Size(min = 2, max = 255)
     private String prenom;
 
     @NotNull
@@ -33,7 +32,7 @@ public class ContactDTO {
     private String mobile;
 
     @NotNull
-    private Client client;
+    private ClientDTO client;
 
     private Boolean isContactPrincipal;
 
@@ -49,11 +48,11 @@ public class ContactDTO {
         contact.setEmail(this.email);
         contact.setTelephone(this.telephone);
         contact.setMobile(this.mobile);
-        contact.setClient(this.client);
+        contact.setClient(this.client.convertToEntity());
         contact.setIsContactPrincipal(this.isContactPrincipal);
         contact.setDateCreation(this.dateCreation);
         contact.setDateMAJ(this.dateMAJ);
         return contact;
     }
-    
+
 }
