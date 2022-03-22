@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.modelmapper.ModelMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -73,6 +72,8 @@ public class Contact {
     public ContactDTO convertToDTO() {
         ContactDTO contactDTO = new ContactDTO();
         contactDTO.setId(this.id);
+        contactDTO.setPrenom(this.prenom);
+        contactDTO.setNom(this.nom);
         contactDTO.setEmail(this.email);
         contactDTO.setTelephone(this.telephone);
         contactDTO.setMobile(this.mobile);
